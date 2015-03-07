@@ -24,6 +24,7 @@ destdir="wc_input"
 
 #It will return list of all files in the folder
 files = [ f for f in os.listdir(destdir) if os.path.isfile(os.path.join(destdir,f)) ]
+#print(files)
 
 #Sort Files
 sorted_files=sorted(files)
@@ -37,12 +38,14 @@ output_file_name="med_result.txt"
 	
 #Path Name
 output_complete_name = os.path.join(output_path, output_file_name) 
+#print(output_complete_name) 
 
 #Open output file
 output_file=open(output_complete_name,'w')
 
 #Length of lines will be added here! 
 medianlist=[]
+#print(medianlist)
 
 for f in files:
 
@@ -56,21 +59,36 @@ for f in files:
 
 	#Path Name
 	input_complete_name = os.path.join(input_path, input_file) 
-
+	#print(input_complete_name)
 
 	for lines in open(input_complete_name):
 
-		#splitting line by space
-		word=lines.strip().split(' ')
+		#print(lines)
+		
+		#Checking if line is blank or not		
+		if(lines.strip()!=''):
+		
+			#splitting line by space		
+			word=lines.strip().split(' ')
+			#print(word)
 
-		wordcount=0
+			wordcount=0
 
-		#Calculating word count in each line
-		for item in word:
-			wordcount=wordcount+1
+		
+
+			#Calculating word count in each line
+			for item in word:
+				#print(item)			
+				wordcount=wordcount+1
+				#print(wordcount)
+
+		else:
+			#Word count = 0 in case of blank lines			
+			wordcount=0
 
 		#Adding word count in list
 		medianlist.append(wordcount)
+		#print(medianlist)
 
 		#Calculating median using median function
 		med=float(median(medianlist))

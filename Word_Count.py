@@ -1,7 +1,7 @@
 #This file will calculate Word count of a given file and will write the output in a file wc_result.txt
 
-#Input: File whose count has to be calculated
-#Output: File names wc_result.txt
+#Input: \wc_input\[All files] 
+#Output: File named \wc_output\wc_result.txt
 #Method: Split words and increment count
 
 import re
@@ -24,13 +24,14 @@ output_file_name="wc_result.txt"
 	
 #Path Name
 output_complete_name = os.path.join(output_path, output_file_name) 
+#print(output_complete_name)
 
 #Open output file
 output_file=open(output_complete_name,'w')
 
 #List of words
 words={}
-
+#print(words)
 
 for f in files:
 
@@ -49,26 +50,32 @@ for f in files:
 
 		#print(lines+"\n\n")
 	
-		#splitting line by space
-		word=lines.strip().split(' ')
+		#Checking if line is blank
+		if(lines.strip()!=''):
 
-		for item in word:
+			#splitting line by space
+			word=lines.strip().split(' ')
+
+			for item in word:
 	
-			#Removing unnecesary characters
-			item=re.sub('[,,.,-,!,#,$,%,@,(,),*,&,^,+,-]',' ',item)
-			item=item.replace(' ','')
-			item=item.lower()
+				#Removing unnecesary characters
+				item=re.sub('[,,.,-,!,#,$,%,@,(,),*,&,^,+,-]',' ',item)
+				item=item.replace(' ','')
+				item=item.lower()
 	
-			if(item not in words):
-				words[item]=1
-			else:
-				words[item]=words[item]+1
+				if(item not in words):
+					words[item]=1
+				else:
+					words[item]=words[item]+1
 
-	sorted_words=sorted(words.items(),key=operator.itemgetter(0))
-
-for item,count in sorted_words:
-	output_file.write(item+" ")
-	output_file.write(str(count))
-	output_file.write("\n")
+		
+		#sorting words
+		sorted_words=sorted(words.items(),key=operator.itemgetter(0))
+	
+if(bool(words)):
+	for item,count in sorted_words:
+		output_file.write(item+"\t")
+		output_file.write(str(count))
+		output_file.write("\n")
 
 output_file.close()
